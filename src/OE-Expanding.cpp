@@ -7,6 +7,7 @@
 #define BJORKEN
 #include "Params.h"
 #define EULER
+double C_1, C_z, C_zB, m1, mz, mzB;
 
 namespace WaveFct {
 std::fstream RateFile;
@@ -14,8 +15,6 @@ CLEGENDRE2 PsiVals, CintVals;
 NT Rate = {}, RateL = {}, RateR = {};
 
 double T0, P, z, zB, g, mDSqr, lambda, t0, t1, dt, tmax, alpha;
-double C_1, C_z, C_zB, m1, mz, mzB;
-std::string process = "G_GG";
 std::string Header, shortName, longName;
 
 void Integrand(const double q, const double p,
@@ -173,7 +172,7 @@ void Evolve() {
     // Strip last part of string
 
     std::string fname = "Output/Opacity/bjorken" + longName + ".dat";
-    fmt::ostream RateFile = fmt::output_file(fname, std::ios::out);
+    fmt::ostream RateFile = fmt::output_file(fname);
 
     RateFile.print("{}", Header);
     RateFile.print("t Rate\n");

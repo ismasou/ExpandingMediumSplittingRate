@@ -18,13 +18,13 @@ mkdir -p Output/Opacity
 
 # Run the program
 echo -e "${BOLDRED}Running first set of simulations${RESET}"
-./Static.out -P 16 -T 0.2 -z 0.1875 -Process G_GG
+./Static.out -P 16 -T 0.2 -z 0.1875 -Process Q_GQ
 echo -e "${BOLDRED}Running second set of simulations${RESET}"
-./Static.out -P 16 -T 0.2 -z 0.5 -Process G_GG
+./Static.out -P 16 -T 0.2 -z 0.5 -Process Q_GQ
 echo -e "${BOLDRED}Running third set of simulations${RESET}"
-./Static.out -P 16 -T 0.4 -z 0.1875 -Process G_GG
+./Static.out -P 16 -T 0.4 -z 0.1875 -Process Q_GQ
 echo -e "${BOLDRED}Running fourth set of simulations${RESET}"
-./Static.out -P 16 -T 0.4 -z 0.5 -Process G_GG
+./Static.out -P 16 -T 0.4 -z 0.5 -Process Q_GQ
 
 # Copy results to CH_G_Comparison
 echo -e "${BOLDRED}Copying results to CH_G_Comparison${RESET}"
@@ -41,10 +41,10 @@ fi
 
 # Run Opacity Expansion
 echo -e "${BOLDRED}Running Opacity Expansion${RESET}"
-./Opacity.out -P 16 -T 0.2 -z 0.1875 -Process G_GG
-./Opacity.out -P 16 -T 0.2 -z 0.5 -Process G_GG
-./Opacity.out -P 16 -T 0.4 -z 0.1875 -Process G_GG
-./Opacity.out -P 16 -T 0.4 -z 0.5 -Process G_GG
+./Opacity.out -P 16 -T 0.2 -z 0.1875 -Process Q_GQ
+./Opacity.out -P 16 -T 0.2 -z 0.5 -Process Q_GQ
+./Opacity.out -P 16 -T 0.4 -z 0.1875 -Process Q_GQ
+./Opacity.out -P 16 -T 0.4 -z 0.5 -Process Q_GQ
 
 # Copy results to CH_G_Comparison
 echo -e "${BOLDRED}Copying OE results to CH_G_Comparison${RESET}"

@@ -5,6 +5,7 @@
 #include <omp.h>
 #include "Params.h"
 #include <fmt/os.h>
+double C_1, C_z, C_zB, m1, mz, mzB;
 
 namespace WaveFct {
 double T0, P, z, zB, g, mDSqr, lambda, t0, t1, dt, tmax, alpha;
