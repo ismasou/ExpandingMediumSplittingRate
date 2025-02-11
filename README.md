@@ -1,5 +1,7 @@
 # Splitting Rate Solver in Expanding medium
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14849456.svg)](https://doi.org/10.5281/zenodo.14849456)
+
 This is a simple solver for QCD in-medium splitting rate in evolving media described in [1].
 The Makefile contains few options to compile Static and Expanding medium solvers.
 To get a feel of how to run the code use the bash scripts `CH_G_Check.sh` which generates the splitting rate in a static medium.
