@@ -11,10 +11,10 @@ This will compile the code and generate the splitting rates and plots for the ex
 ## Usage
 
 There are several executables that can be compiled:
-    - `Static`: for a static medium
-    - `Expanding`: for an expanding medium
-    - `Opacity`: for opacity expansion in static medium
-    - `ExpandingOp`: for opacity expansion in expanding medium
+- `Static`: for a static medium
+- `Expanding`: for an expanding medium
+- `Opacity`: for opacity expansion in static medium
+- `ExpandingOp`: for opacity expansion in expanding medium
 
 All the executables take the following arguments:
 ```bash
@@ -31,12 +31,12 @@ All the executables take the following arguments:
 
 ## Dependencies
 This code uses the following libraries:
-    - `gsl`: gnu scientific library.
-    - `fmt`: formatting library for output.
-    - `openmp`: for parallelization.
-    - `boost/math/quadrature/gauss_kronrod.hpp`: for numerical integration.
+- `gsl`: gnu scientific library.
+- `fmt`: formatting library for output.
+- `openmp`: for parallelization.
+- `boost/math/quadrature/gauss_kronrod.hpp`: for numerical integration.
 
 
 ## References
-[1] I. Soudi e-Print: 2409.04806 [hep-ph]
-[2] S. Caron-Huot and C. Gale, Phys. Rev. C 82, 064902 (2010), arXiv:1006.2379 [hep-ph].
+* [1] I. Soudi e-Print: 2409.04806 [hep-ph]
+* [2] S. Caron-Huot and C. Gale, Phys. Rev. C 82, 064902 (2010), arXiv:1006.2379 [hep-ph].
