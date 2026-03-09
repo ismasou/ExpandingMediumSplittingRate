@@ -310,6 +310,15 @@ inline double CRateAng2(double p2, double q2, double z2, double t) {
          (z2 + p2 + q2) / std::sqrt((z2 + p2 + q2) * (z2 + p2 + q2) - 4.0 * p2 * q2));
 }
 
+// Collision kernel C(k) = 1/(k^2 * (k^2 + 1)) where k^2 = |p - q|^2
+inline double CKernel(double k2, double mSqr, double t) {
+    double TT = Temp(t);
+    double T2 = TT * TT;
+    double T3 = 1.0 / TT;
+    k2 /= T2;
+    return 1.0 / (k2 * (k2 + 1.0));
+}
+
 inline double Meff() {
     return zB * mz + z * mzB - z * zB * m1;
 }

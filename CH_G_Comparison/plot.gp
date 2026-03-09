@@ -57,6 +57,7 @@ function $myplot(T,k) << EOD
     plot\
         "./CH_Gale-".TT.".txt" u 1:2 w l ls 1 lw 1 ti "Caron-Huot Gale",\
         "./rate-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 5 lw 1 dt 2 ti "SplittingRates",\
+        "./rate-2d-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 6 lw 1 dt 4 ti "2D Integral",\
         "./rate-opacity-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 7 lw 1 ti "opacity",\
         HO(x / InvGevTofm, z) w l ls 3 lw 0.6 dt (2,2) ti "HO"
     return 1
