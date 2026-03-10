@@ -41,7 +41,6 @@ inline std::complex<double> Integrand(const double q, const double p,
     for (int it = 0; it < Ntheta; it++) {
         double theta = thetaPoints[it];
         double cosT = std::cos(theta);
-        double wt = thetaWeights[it];
 
         std::array<double, 3> k2 = {
             p2 - 2.0 * p *q *cosT + q2,
@@ -50,12 +49,12 @@ inline std::complex<double> Integrand(const double q, const double p,
         };
 
 
-        double C = C_1 * CKernel(k2[0], mDSqr, 0.0)
-                   + C_z * CKernel(k2[1], mDSqr, 0.0)
-                   + C_zB * CKernel(k2[2], mDSqr, 0.0);
+        double C = C_1 * CRate(k2[0])
+                   + C_z * CRate(k2[1])
+                   + C_zB * CRate(k2[2]);
 
-        thetaInt1 += wt * C;
-        thetaInt2 += wt * C * cosT;
+        thetaInt1 += thetaWeight * C;
+        thetaInt2 += thetaWeight * C * cosT;
     }
 
     thetaInt1 /= (2.0 * M_PI);
@@ -207,7 +206,7 @@ void ComputeRate(double dt, double Deltat) {
 
 void Evolve() {
 
-    std::string fname = "Output/Full/rate" + shortName;
+    std::string fname = "Output/Static2D/rate" + shortName;
 
     RateFile = std::make_unique<fmt::ostream>(fmt::output_file(fname + ".dat",
                fmt::file::WRONLY | fmt::file::CREATE));
