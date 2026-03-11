@@ -1,3 +1,4 @@
+#pragma once
 #include <cmath>
 #include <cstring>
 #include <fmt/base.h>
@@ -242,6 +243,9 @@ inline double Temp(double t) {
 }
 
 inline double CRate(double q2) {
+    if (q2 == 0.0) {
+        return 0.0;
+    }
     return 1.0 / (q2 * (q2 + 1));
 }
 

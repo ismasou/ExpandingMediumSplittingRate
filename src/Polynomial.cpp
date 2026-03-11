@@ -1,4 +1,5 @@
 #include "Polynomial.h"
+#pragma once
 #include <iostream>
 #include <cmath>
 #include "Params.h"

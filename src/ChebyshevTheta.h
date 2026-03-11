@@ -4,6 +4,8 @@
 #include <cmath>
 #include <array>
 
+namespace ThetaQuad {
+
 // Quadrature for theta integral from 0 to 2*pi
 // Exploits symmetry: integrand depends on cos(theta) which is even
 // So we integrate from 0 to pi and multiply weights by 2
@@ -11,7 +13,7 @@
 // Switch between methods by defining THETA_CHEBYSHEV before including
 // Default: Trapezoidal (optimal for periodic functions)
 
-constexpr int Ntheta = 128;
+constexpr int Ntheta = 32;
 
 #ifdef THETA_CHEBYSHEV
 // Chebyshev-Gauss nodes on [0, pi]: theta_k = pi*(2k+1)/(2N)
@@ -50,12 +52,31 @@ inline const std::array<double, Ntheta> thetaPoints = makeThetaPoints();
 inline const double thetaWeight = 2.0 * M_PI / (Ntheta - 1);
 
 template <typename Func>
-inline double thetaIntegrate(Func f) {
+inline double Integrate(Func f) {
     double sum = 0.0;
     for (int k = 1; k < Ntheta-1; k++) {
         sum += thetaWeight * f(thetaPoints[k]);
     }
     sum += 0.5 * thetaWeight * (f(thetaPoints[0]) + f(thetaPoints[Ntheta-1]));
     return sum;
+}
+
+template <size_t n, typename Func>
+std::array<double, n> Integrate(Func f) {
+    std::array<double, n> sum = {};
+    for (int k = 1; k < Ntheta-1; k++) {
+        auto res = f(thetaPoints[k]);
+        for (size_t i = 0; i < n; i++) {
+            sum[i] += thetaWeight * res[i];
+        }
+    }
+
+    auto res1 = f(thetaPoints[0]);
+    auto res2 = f(thetaPoints[Ntheta-1]);
+    for (size_t i = 0; i < n; i++) {
+        sum[i] += 0.5 * thetaWeight * (res1[i] + res2[i]);
+    }
+    return sum;
+}
 }
 #endif

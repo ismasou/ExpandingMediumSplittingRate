@@ -1,6 +1,4 @@
-#ifndef POLYNOMIAL_H
-#define POLYNOMIAL_H
-
+#pragma once
 
 #include <array>
 #include <cmath>
@@ -38,5 +36,3 @@ inline double Jacobian(double p);
 void Setup() ;
 
 }
-
-#endif

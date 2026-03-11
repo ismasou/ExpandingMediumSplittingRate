@@ -34,29 +34,23 @@ inline std::complex<double> Integrand(const double q, const double p,
     const double logExp = (p2 - q2) * Deltat;
     auto dExp = std::complex<double>(std::cos(logExp), std::sin(logExp));
 
-    // Integrate over theta using Chebyshev quadrature
-    double thetaInt1 = 0.0;  // integral of C(p-q) for Psi(p) term
-    double thetaInt2 = 0.0;  // integral of C(p-q) * cos(theta) for Psi(q) term
 
-    for (int it = 0; it < Ntheta; it++) {
-        double theta = thetaPoints[it];
+    auto integrand = [&](double theta) {
         double cosT = std::cos(theta);
 
-        std::array<double, 3> k2 = {
-            p2 - 2.0 * p *q *cosT + q2,
-            p2 - 2.0 * z *p *q *cosT + z2 * q2,
-            p2 - 2.0 * zB *p *q *cosT + zB2 *q2
-        };
+        double k2 = p2 - 2.0 * p *q *cosT + q2;
 
 
-        double C = C_1 * CRate(k2[0])
-                   + C_z * CRate(k2[1])
-                   + C_zB * CRate(k2[2]);
+        double C = C_1 * CRate(k2)
+                   + C_z * CRate(k2 / z2) / z2
+                   + C_zB * CRate(k2 / zB2) / zB2;
 
-        thetaInt1 += thetaWeight * C;
-        thetaInt2 += thetaWeight * C * cosT;
-    }
+        return std::array<double, 2> {C,
+                                      C *cosT
+                                     };
+    };
 
+    auto [thetaInt1, thetaInt2] = ThetaQuad::Integrate<2>(integrand);
     thetaInt1 /= (2.0 * M_PI);
     thetaInt2 /= (2.0 * M_PI);
 
@@ -68,6 +62,13 @@ inline std::complex<double> Integrand(const double q, const double p,
     }
 
     auto res = Jac * pPsi * Polynomial::pWeights[iq];
+
+    if (!std::isfinite(res.real()) || !std::isfinite(res.imag())) {
+        fmt::println(stderr, "p: {} q: {} ip: {} iq: {} Deltat: {} res: {} + i {}", p,
+                     q, ip, iq, Deltat, res.real(), res.imag());
+        throw std::runtime_error("Error: Integrand is not finite");
+    }
+
     return res;
 }
 
@@ -173,7 +174,7 @@ void Output(int i, double t) {
         double logExp = -DeltaE(p2) * t;
         auto RateIntegrand = p * real(PsiVals[ip] *
                                       std::complex<double>(std::cos(logExp), std::sin(logExp)));
-        file.print("{} {} {} {} {} {}",
+        file.print("{} {} {} {} {} {}\n",
                    Polynomial::pPoints[ip], PsiVals[ip].real(), PsiVals[ip].imag(),
                    CintVals[ip].real(), CintVals[ip].imag(), RateIntegrand);
     }
