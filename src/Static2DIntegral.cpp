@@ -35,10 +35,9 @@ inline std::complex<double> Integrand(const double q, const double p,
     auto dExp = std::complex<double>(std::cos(logExp), std::sin(logExp));
 
 
-    auto integrand = [&](double theta) {
-        double cosT = std::cos(theta);
+    auto integrand = [&](double theta, double cosTheta, double sinTheta) {
 
-        double k2 = p2 - 2.0 * p *q *cosT + q2;
+        double k2 = p2 - 2.0 * p *q *cosTheta + q2;
 
 
         double C = C_1 * CRate(k2)
@@ -46,7 +45,7 @@ inline std::complex<double> Integrand(const double q, const double p,
                    + C_zB * CRate(k2 / zB2) / zB2;
 
         return std::array<double, 2> {C,
-                                      C *cosT
+                                      C * cosTheta
                                      };
     };
 

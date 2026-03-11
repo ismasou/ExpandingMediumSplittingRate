@@ -87,9 +87,9 @@ echo -e "Plots generated in CH_G_Comparison"
 
 
 # if imgcat is available, display the plots
-if command -v imgcat &> /dev/null; then
+if command -v wezterm &> /dev/null; then
     echo -e "${BOLDRED}Displaying plots${RESET}"
-    imgcat CH_G_Comparison/CG_G_Comparison.png
+    wezterm imgcat CH_G_Comparison/CG_G_Comparison.png
 fi
 
 
