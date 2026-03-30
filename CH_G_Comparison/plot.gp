@@ -56,8 +56,8 @@ function $myplot(T,k) << EOD
     print T,k
     plot\
         "./CH_Gale-".TT.".txt" u 1:2 w l ls 1 lw 1 ti "Caron-Huot Gale",\
-        "./rate-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 5 lw 1 dt 2 ti "SplittingRates",\
-        "./rate-2d-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 6 lw 1 dt 4 ti "2D Integral",\
+        "./rate-".TT.".dat"   u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 5 lw 1 dt 2 ti "SplittingRates",\
+        "./rate2D-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 6 lw 1 dt 4 ti "2D Integral",\
         "./rate-opacity-".TT.".dat" u (InvGevTofm * dt($1)):(g**4 * T * Pqg(z) / pi * $2 / P) w l ls 7 lw 1 ti "opacity",\
         HO(x / InvGevTofm, z) w l ls 3 lw 0.6 dt (2,2) ti "HO"
     return 1
@@ -66,6 +66,8 @@ EOD
 set term pngcairo size 1920,1080 enhanced font ",20" lw 8
 set output "./CG_G_Comparison.png"
 set multiplot layout 2,2
+set xlabel "t [fm]"
+set ylabel "dGamma/dt"
 T = 0.2; k = 3;
 x = $myplot(T,k)
 T = 0.4; k = 3;
