@@ -10,7 +10,7 @@ public:
     Interpolate(size_t nx, size_t ny){
         xacc.resize(omp_get_max_threads());
         yacc.resize(omp_get_max_threads());
-        for(size_t i = 0; i < nx; i++){
+        for(size_t i = 0; i < xacc.size(); i++){
             xacc[i] = gsl_interp_accel_alloc();
             yacc[i] = gsl_interp_accel_alloc();
         }
