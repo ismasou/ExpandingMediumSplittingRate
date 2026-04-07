@@ -188,6 +188,7 @@ void Evolve() {
     RateFile = std::make_unique<fmt::ostream>(fmt::output_file(fname + ".dat", fmt::file::WRONLY | fmt::file::CREATE));
     RateFile->print("{}", Header);
     RateFile->print("t Rate \n");
+    RateFile->flush();
     Rate = 0.0;
     double Deltat = 0.0;
     int i = 0;

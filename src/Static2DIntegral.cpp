@@ -5,6 +5,7 @@
 #include <omp.h>
 #include "Params.h"
 #include <fmt/os.h>
+#include "CRateTable.h"
 #define EULER
 // #define RK4
 #define DEBUG
@@ -22,8 +23,18 @@ const int NAv = 20;
 bool RateNotConverged = true;
 
 
+double CRate(double q2, double theta){
+    if (q2 == 0.0) {
+	return 0.0;
+    }
+    // return 1.0 / (q2 * (q2 + 1.0));
+    return CRateInterp(q2, theta);
+}
+
 inline std::complex<double> Integrand(const double q, const double p,
                                       const double Deltat, const int ip, const int iq) {
+
+
     const double Jac = 1.0 / (2.0 * M_PI);
     const double p2 = p * p;
     const double q2 = q * q;
@@ -39,10 +50,9 @@ inline std::complex<double> Integrand(const double q, const double p,
 
         double k2 = p2 - 2.0 * p *q *cosTheta + q2;
 
-
-        double C = C_1 * CRate(k2)
-                   + C_z * CRate(k2 / z2) / z2
-                   + C_zB * CRate(k2 / zB2) / zB2;
+        double C = C_1  * CRate(k2, theta)
+                 + C_z  * CRate(k2 / z2,  theta) / z2
+                 + C_zB * CRate(k2 / zB2, theta) / zB2;
 
         return std::array<double, 2> {C,
                                       C * cosTheta
@@ -212,6 +222,7 @@ void Evolve() {
                fmt::file::WRONLY | fmt::file::CREATE));
     RateFile->print("{}", Header);
     RateFile->print("t Rate \n");
+    RateFile->flush();
     Rate = 0.0;
     double Deltat = 0.0;
     int i = 0;
@@ -234,6 +245,7 @@ void Evolve() {
 
         if (i % 10 == 0) {
             RateFile->print("{} {} {}\n", Deltat, Rate, RateOld - Rate);
+            RateFile->flush();
             // Lets check how big is the wave function
             double norm = 0.0;
 
@@ -258,6 +270,7 @@ void Evolve() {
 
 
 void Setup() {
+    InitCRateTable("/pc2/users/h/hion0024/QCDKinetic/Data/Cqperp/OUTPUT10/CqperpXgg_gg_0.txt", std::sqrt(mDSqr), 3, g, T0);
     Initialize();
     Evolve();
 
