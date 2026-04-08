@@ -1,4 +1,4 @@
-#include "CRateTable.h"
+#pragma once
 
 #include <algorithm>
 #include <cmath>
@@ -191,8 +191,14 @@ double CRateInterp(double q2, double phi)
     }
 
     phi = WrapPhi(phi);
-    q2  = std::max(gQ2Min,  std::min(q2,  gQ2Max));
     phi = std::max(gPhiMin, std::min(phi, gPhiMax));
+    // q2  = std::max(gQ2Min,  std::min(q2,  gQ2Max));
+    if (q2 < gQ2Min) {
+        return gCRateInterpolate(gQ2Min, phi);
+    }
+    else if (q2 > gQ2Max) {
+        return gCRateInterpolate(gQ2Max, phi) * std::pow(gQ2Max / q2, 4);
+    }
 
     return gCRateInterpolate(q2, phi);
 }

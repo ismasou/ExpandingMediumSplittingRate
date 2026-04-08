@@ -5,7 +5,7 @@
 #include <omp.h>
 #include "Params.h"
 #include <fmt/os.h>
-#include "CRateTable.h"
+#include "CRateTable.cpp"
 #define EULER
 // #define RK4
 #define DEBUG
@@ -27,7 +27,7 @@ double CRate(double q2, double theta){
     if (q2 == 0.0) {
 	return 0.0;
     }
-    // return 1.0 / (q2 * (q2 + 1.0));
+    // return (mDSqr) / (3.0 * g * g * T0) * 1.01191164910221 / ((q2 + 0.575218797002351) * (q2 + 0.575218797002351));
     return CRateInterp(q2, theta);
 }
 
@@ -174,7 +174,7 @@ void UpdatePsiVals(double dt, double Deltat) {
 void Output(int i, double t) {
     fmt::ostream file = fmt::output_file("./Output/Evolution/output-" +
                                          std::to_string(i) + ".dat",
-                                         fmt::file::WRONLY | fmt::file::CREATE);
+                                         fmt::file::WRONLY | fmt::file::TRUNC);
     file.print("p Re(Psi) Im(Psi) Re(Cint) Im(Cint) RateIntegrand \n");
 
     for (int ip = 0; ip < Np; ip++) {
@@ -219,7 +219,7 @@ void Evolve() {
     std::string fname = "Output/Static2D/rate" + shortName;
 
     RateFile = std::make_unique<fmt::ostream>(fmt::output_file(fname + ".dat",
-               fmt::file::WRONLY | fmt::file::CREATE));
+               fmt::file::WRONLY | fmt::file::TRUNC));
     RateFile->print("{}", Header);
     RateFile->print("t Rate \n");
     RateFile->flush();
@@ -270,7 +270,7 @@ void Evolve() {
 
 
 void Setup() {
-    InitCRateTable("/pc2/users/h/hion0024/QCDKinetic/Data/Cqperp/OUTPUT10/CqperpXgg_gg_0.txt", std::sqrt(mDSqr), 3, g, T0);
+    InitCRateTable("CqperpXgg_gg_0.txt", std::sqrt(mDSqr), 3, g, T0);
     Initialize();
     Evolve();
 
