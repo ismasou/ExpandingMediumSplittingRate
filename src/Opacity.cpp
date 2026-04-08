@@ -102,7 +102,7 @@ void Evolve() {
 
     std::string fname = "Output/Opacity/opacity" + shortName;
     RateFile = std::make_unique<fmt::ostream>(fmt::output_file(fname + ".dat",
-               fmt::file::WRONLY | fmt::file::CREATE));
+               fmt::file::WRONLY | fmt::file::TRUNC));
     RateFile->print("{}", Header);
     RateFile->print("t Rate \n");
     Rate = 0.0;

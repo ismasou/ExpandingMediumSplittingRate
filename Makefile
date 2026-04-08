@@ -8,7 +8,7 @@ Static:
 	g++ $(GSL_INC) ./src/Polynomial.cpp ./src/Static.cpp -o Static.out $(GSL_LIB) -lm -lgsl -lgslcblas -g -O3 -fopenmp -march=native $(FMT_FLAGS)
 
 Static2D:
-	g++ $(GSL_INC) ./src/Polynomial.cpp ./src/CRateTable.cpp ./src/Static2DIntegral.cpp -o Static2D.out $(GSL_LIB) -lm -lgsl -lgslcblas -g -O3 -fopenmp -march=native $(FMT_FLAGS)
+	g++ $(GSL_INC) ./src/Polynomial.cpp ./src/Static2DIntegral.cpp -o Static2D.out $(GSL_LIB) -lm -lgsl -lgslcblas -g -O3 -fopenmp -march=native $(FMT_FLAGS)
 
 TestTheta:
 	g++ ./src/TestThetaIntegral.cpp -o TestTheta.out -lm -O3 $(FMT_FLAGS)
@@ -21,3 +21,6 @@ Expanding:
 
 ExpandingOp:
 	g++ $(GSL_INC) ./src/Polynomial.cpp ./src/OE-Expanding.cpp -o OEExp.out $(GSL_LIB) -lm -lgsl -lgslcblas -g -O3 -fopenmp -march=native $(FMT_FLAGS)
+
+CheckInterp:
+	g++ $(GSL_INC) ./src/check_interp.cpp -o check_interp.out $(GSL_LIB) -lm -lgsl -lgslcblas -g -O3 -fopenmp -march=native $(FMT_FLAGS)

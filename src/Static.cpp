@@ -142,7 +142,7 @@ void UpdatePsiVals(double dt, double Deltat) {
 
 void Output(int i, double t) {
     fmt::ostream file = fmt::output_file("./Output/Evolution/output-" + std::to_string(i) + ".dat",
-              fmt::file::WRONLY | fmt::file::CREATE);
+              fmt::file::WRONLY | fmt::file::TRUNC);
     file.print("p Re(Psi) Im(Psi) Re(Cint) Im(Cint) RateIntegrand \n");
 
     for (int ip = 0; ip < Np; ip++) {
@@ -185,7 +185,7 @@ void Evolve() {
 
     std::string fname = "Output/Full/rate" + shortName;
 
-    RateFile = std::make_unique<fmt::ostream>(fmt::output_file(fname + ".dat", fmt::file::WRONLY | fmt::file::CREATE));
+    RateFile = std::make_unique<fmt::ostream>(fmt::output_file(fname + ".dat", fmt::file::WRONLY | fmt::file::TRUNC));
     RateFile->print("{}", Header);
     RateFile->print("t Rate \n");
     RateFile->flush();
